@@ -1,0 +1,11 @@
+/* example: for stmt */
+
+int i;
+int b;
+{
+  b = 1;
+
+  for (i = 0; i < 10; i = i + 1; )
+     b = b * 2;
+
+}

@@ -1,0 +1,15 @@
+_t1 = 1.00
+a = _t1
+_t2 = 2.00
+b = _t2
+_t3 = a
+_t4 = b
+if _t3 > _t4 goto label1
+_t5 = 8
+c = _t5
+goto label2
+label1:
+_t6 = 100
+c = _t6
+label2:
+halt

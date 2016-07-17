@@ -1,0 +1,26 @@
+_t1 = 0
+a = _t1
+_t2 = a
+_t3 = 17
+_t4 = _t2 + _t3
+if _t4 == 1 goto label1
+if _t4 == 2 goto label2
+if _t4 == 3 goto label3
+goto label4
+label1:
+_t5 = 11
+b = _t5
+goto label5
+label2:
+_t6 = 12
+b = _t6
+goto label5
+label3:
+_t7 = 13
+b = _t7
+goto label5
+label4:
+_t8 = 100
+b = _t8
+label5:
+halt

@@ -1,0 +1,15 @@
+/* example: simple while stmt */
+
+int a;
+int b;
+{
+  a = 0;
+  b = 7;
+
+  do { 
+    a = a + 3;
+	b = a * 6;
+  } while (a < 100);
+}
+
+   

@@ -1,0 +1,25 @@
+_t1 = z
+_t2 = 2
+_t3 = 3
+_t4 = _t2 * _t3
+ifFalse _t1 < _t4 goto label1
+_t5 = b
+_t6 = c
+_t7 = _t5 - _t6
+_t8 = 17
+_t9 = _t7 / _t8
+a = _t9
+goto label2
+label1:
+label3:
+_t10 = h
+_t11 = 7
+ifFalse _t10 == _t11 goto label4
+_t12 = x
+_t13 = 0.60
+_t14 = _t12 plus _t13
+x = _t14
+goto label3
+label4:
+label2:
+halt

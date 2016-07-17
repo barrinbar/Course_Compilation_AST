@@ -1,0 +1,19 @@
+_t1 = 1
+b = _t1
+_t2 = 0
+i = _t2
+label1:
+_t3 = i
+_t4 = 10
+ifFalse _t3 < _t4 goto label2
+_t5 = b
+_t6 = 2
+_t7 = _t5 * _t6
+b = _t7
+_t8 = i
+_t9 = 1
+_t10 = _t8 + _t9
+i = _t10
+goto label1
+label2:
+halt

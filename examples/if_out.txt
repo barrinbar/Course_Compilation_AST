@@ -1,0 +1,19 @@
+_t1 = 1
+a = _t1
+_t2 = 2
+b = _t2
+_t3 = 3
+c = _t3
+_t4 = a
+_t5 = b
+_t6 = _t4 + _t5
+_t7 = c
+ifFalse _t6 <= _t7 goto label1
+_t8 = 3.14
+z = _t8
+goto label2
+label1:
+_t9 = 2.72
+z = _t9
+label2:
+halt
