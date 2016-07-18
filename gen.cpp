@@ -238,12 +238,13 @@ void ReadStmt::genStmt()
 
 void WriteStmt::genStmt()
 {
-	myType idtype = _id->_type; 
+
+	_exp->genExp(); 
 	
-	if (idtype == _INT)
- 	  emit ("iwrite %s\n", _id->_name);
+	if (_exp->_type == _INT)
+ 	  emit ("iwrite _t%d\n", _exp->_result);
     else
-      emit ("fwrite %s\n", _id->_name);
+      emit ("fwrite _t%d\n", _exp->_result);
 }
 
 void AssignStmt::genStmt()

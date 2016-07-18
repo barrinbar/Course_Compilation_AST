@@ -153,12 +153,11 @@ public:
 
 class WriteStmt: public Stmt {
 public:
-      WriteStmt (IdNode *id, int line) { _id = id; _line = line;};
+      WriteStmt (Exp *exp, int line) { _exp = exp; _line = line;};
 
       void genStmt (); // override	  
 
-      IdNode *_id;  // note: this idNode is not really an expression and 
-	                // the _result field it inherits from Exp is irrelevant
+      Exp *_exp; // The expression to be written
 	  int _line; // line in source code 
 };
 

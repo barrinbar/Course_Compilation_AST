@@ -102,6 +102,7 @@ typedef union YYSTYPE
    Block *block;
    Stmt *stmtlist; // points to first Stmt in the list (NULL if list is empty)
    ReadStmt *read_stmt;
+   WriteStmt *write_stmt;
    AssignStmt *assign_stmt;
    IfStmt *if_stmt;
    WhileStmt *while_stmt;
@@ -117,7 +118,7 @@ typedef union YYSTYPE
 
 
 /* Line 2058 of yacc.c  */
-#line 121 "ast.tab.h"
+#line 122 "ast.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

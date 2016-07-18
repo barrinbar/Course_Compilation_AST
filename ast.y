@@ -114,7 +114,7 @@ read_stmt:    READ '(' ID ')' ';'{
                 $$ = new ReadStmt (new IdNode ($3, @3.first_line), @1.first_line); };
 
 write_stmt:   WRITE '(' expression ')' ';' { 
-                $$ = new WriteStmt (new IdNode ($3, @3.first_line), @1.first_line); };
+                $$ = new WriteStmt ($3, @3.first_line); };
                 
 assign_stmt:  ID '='  expression ';' { $$ = new AssignStmt (new IdNode ($1, @1.first_line),
                                                             $3, @2.first_line); };
