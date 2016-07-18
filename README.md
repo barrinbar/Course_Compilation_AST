@@ -51,7 +51,7 @@ do
 
 ```
 flex  ast.lex
-bison –d ast.y'''
+bison –d ast.y
 g++ -o myprog.exe ast.tab.c lex.yy.c gen.cpp symtab.cpp ast.cpp
 ```
 
