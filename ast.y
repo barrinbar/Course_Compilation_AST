@@ -34,6 +34,7 @@ int errors;
    Block *block;
    Stmt *stmtlist; // points to first Stmt in the list (NULL if list is empty)
    ReadStmt *read_stmt;
+   WriteStmt *write_stmt;
    AssignStmt *assign_stmt;
    IfStmt *if_stmt;
    WhileStmt *while_stmt;
@@ -63,6 +64,7 @@ int errors;
 %type <block> block
 %type <stmtlist> stmtlist
 %type <read_stmt> read_stmt 
+%type <write_stmt> write_stmt 
 %type <assign_stmt> assign_stmt 
 %type <while_stmt> while_stmt
 %type <do_while_stmt> do_while_stmt
@@ -99,7 +101,7 @@ type: INT { $$ = _INT; } |
 
 stmt       :  assign_stmt { $$ = $1; } |
               read_stmt { $$ = $1; } |
-			  write_stmt { $$ = 0; /* not implemented yet */ } |
+			  write_stmt { $$ = $1; } |
               while_stmt  { $$ = $1; } |
 			  do_while_stmt { $$ = $1; } |
 	          if_stmt     { $$ = $1; } |
@@ -111,7 +113,8 @@ stmt       :  assign_stmt { $$ = $1; } |
 read_stmt:    READ '(' ID ')' ';'{ 
                 $$ = new ReadStmt (new IdNode ($3, @3.first_line), @1.first_line); };
 
-write_stmt:   WRITE '(' expression ')' ';' ;
+write_stmt:   WRITE '(' expression ')' ';' { 
+                $$ = new WriteStmt (new IdNode ($3, @3.first_line), @1.first_line); };
                 
 assign_stmt:  ID '='  expression ';' { $$ = new AssignStmt (new IdNode ($1, @1.first_line),
                                                             $3, @2.first_line); };

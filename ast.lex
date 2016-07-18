@@ -53,6 +53,7 @@ extern int atoi (const char *);
 "default"  { return DEFAULT; }
 "break"    { return BREAK; }
 "read"     { return READ;}
+"write"    { return WRITE;}
 "do"       { return DO;}
       
 

@@ -236,6 +236,16 @@ void ReadStmt::genStmt()
       emit ("fread %s\n", _id->_name);
 }
 
+void WriteStmt::genStmt()
+{
+	myType idtype = _id->_type; 
+	
+	if (idtype == _INT)
+ 	  emit ("iwrite %s\n", _id->_name);
+    else
+      emit ("fwrite %s\n", _id->_name);
+}
+
 void AssignStmt::genStmt()
 {
     _rhs->genExp();

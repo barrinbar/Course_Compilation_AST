@@ -151,6 +151,17 @@ public:
 	  int _line; // line in source code 
 };
 
+class WriteStmt: public Stmt {
+public:
+      WriteStmt (IdNode *id, int line) { _id = id; _line = line;};
+
+      void genStmt (); // override	  
+
+      IdNode *_id;  // note: this idNode is not really an expression and 
+	                // the _result field it inherits from Exp is irrelevant
+	  int _line; // line in source code 
+};
+
 class AssignStmt : public Stmt {
 public:
       AssignStmt (IdNode *lhs, Exp *rhs, int line);
