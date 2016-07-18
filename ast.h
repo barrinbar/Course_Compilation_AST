@@ -186,6 +186,18 @@ public:
 	 Stmt *_body;
 };
 
+class DoWhileStmt: public Stmt {
+public: 
+     DoWhileStmt (BoolExp *condition, Stmt *body)
+	          : Stmt ()
+	          { _condition = condition; _body = body; }
+
+	 void genStmt (); // override			  
+
+     BoolExp *_condition;
+	 Stmt *_body;
+};
+
 class ForStmt: public Stmt {
 public:
      ForStmt (AssignStmt *init, BoolExp *condition, AssignStmt *step, Stmt *body) {

@@ -37,6 +37,7 @@ int errors;
    AssignStmt *assign_stmt;
    IfStmt *if_stmt;
    WhileStmt *while_stmt;
+   DoWhileStmt *do_while_stmt;
    ForStmt *for_stmt;
    SwitchStmt *switch_stmt;
    Case *caselist; //points to first Case in the list
@@ -64,6 +65,7 @@ int errors;
 %type <read_stmt> read_stmt 
 %type <assign_stmt> assign_stmt 
 %type <while_stmt> while_stmt
+%type <do_while_stmt> do_while_stmt
 %type <if_stmt>  if_stmt
 %type <for_stmt> for_stmt
 %type <switch_stmt> switch_stmt;
@@ -99,7 +101,7 @@ stmt       :  assign_stmt { $$ = $1; } |
               read_stmt { $$ = $1; } |
 			  write_stmt { $$ = 0; /* not implemented yet */ } |
               while_stmt  { $$ = $1; } |
-			  do_while_stmt { $$ = 0; /* not implemented yet */ } |
+			  do_while_stmt { $$ = $1; } |
 	          if_stmt     { $$ = $1; } |
 			  for_stmt    { $$ = $1; } |
 			  switch_stmt { $$ = $1; } |
@@ -121,7 +123,7 @@ if_stmt    :  IF '(' boolexp ')' stmt ELSE stmt { $$ = new IfStmt ($3, $5, $7); 
 for_stmt   :  FOR '(' assign_stmt boolexp ';' assign_stmt ')' stmt {
                                                $$ = new ForStmt ($3, $4, $6, $8); };
 											   
-do_while_stmt: DO stmt WHILE '(' boolexp ')'  ';'											   
+do_while_stmt: DO stmt WHILE '(' boolexp ')'  ';' { $$ = new DoWhileStmt ($2, $5); };
 											   
 switch_stmt : SWITCH '(' expression ')' '{' caselist DEFAULT ':' stmt '}' { $$ = new SwitchStmt ($3, $6, $9, @1.first_line); };
 

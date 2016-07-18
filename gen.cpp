@@ -283,6 +283,18 @@ void WhileStmt::genStmt()
 	emit ("label%d:\n", exitlabel);
 }
 
+void DoWhileStmt::genStmt()
+{
+    int stmtlabel = newlabel ();
+	int exitlabel = newlabel ();
+	
+	emit ("label%d:\n", stmtlabel);
+	_body->genStmt ();
+	_condition->genBoolExp (FALL_THROUGH, exitlabel);
+	emit ("goto label%d\n", stmtlabel);
+	emit ("label%d:\n", exitlabel);
+}
+
 void ForStmt::genStmt()
 {
     int condlabel = newlabel ();
