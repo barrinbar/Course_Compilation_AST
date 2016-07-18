@@ -188,7 +188,7 @@ public:
 
 class DoWhileStmt: public Stmt {
 public: 
-     DoWhileStmt (BoolExp *condition, Stmt *body)
+     DoWhileStmt (Stmt *body, BoolExp *condition)
 	          : Stmt ()
 	          { _condition = condition; _body = body; }
 
