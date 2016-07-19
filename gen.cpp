@@ -358,6 +358,7 @@ void SwitchStmt::genStmt()
 		}
 		emit("label%d:\n", defaultabel);
 		_default_stmt->genStmt();
+		emit("label%d:\n", exitlabel);
 	}
 }
 
