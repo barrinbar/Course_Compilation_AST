@@ -2,6 +2,7 @@
 #include <stdlib.h> // exit ()
 #include <stdarg.h>
 #include <stack>
+#include <map>
 
 #include "ast.h"
 #include "symtab.h"
@@ -333,7 +334,31 @@ void Block::genStmt()
 
 void SwitchStmt::genStmt()
 { 
-   // not implemented yet 
+	std::map<int, int> caselabels;
+
+	if (_exp->_type != _INT)
+		errorMsg("line %d: switch expression must have type int\n", _line);
+	else
+	{
+		_exp->genExp();
+		for (Case *cse = _caselist; cse != NULL; cse = cse->_next)
+		{
+			caselabels[cse->_number]= newlabel();
+			emit ("if _t%d == %d goto label%d\n", _exp->_result, cse->_number, caselabels[cse->_number]);
+		}
+		int defaultabel = newlabel ();
+		int exitlabel = newlabel ();
+		emit("goto label%d\n", defaultabel);
+		for (Case *cse = _caselist; cse != NULL; cse = cse->_next)
+		{
+			emit("label%d:\n", caselabels[cse->_number]);
+			cse->_stmt->genStmt();
+			if (cse->_hasBreak)
+				emit("goto label%d\n", exitlabel);
+		}
+		emit("label%d:\n", defaultabel);
+		_default_stmt->genStmt();
+	}
 }
 
 void BreakStmt::genStmt()
