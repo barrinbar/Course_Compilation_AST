@@ -222,6 +222,34 @@ void And::genBoolExp (int truelabel, int falselabel)
 	}
 }
 
+void Imply::genBoolExp (int truelabel, int falselabel)
+{
+    if (truelabel == FALL_THROUGH && falselabel == FALL_THROUGH)
+	    return; // no need for code 
+		
+	if  (truelabel == FALL_THROUGH) {
+	    _left->genBoolExp (FALL_THROUGH, // if left operand is true then fall through and evaluate
+		                                 // right operand.
+                           truelabel); // if left operand is false then the IMPLY expression is
+                                        // true so jump to truelabel);
+        _right->genBoolExp (FALL_THROUGH, falselabel);
+    } else if (falselabel == FALL_THROUGH) {
+//	    int next_label = newlabel(); // FALL_THROUGH implemented by jumping to next_label
+        _left->genBoolExp (FALL_THROUGH, // if left operand is true then fall through and
+                                         // evaluate right operand
+                           truelabel); // if left operand is false then the IMPLY expression 
+                                        //  is true  so jump to truelabel
+        _right->genBoolExp (truelabel, FALL_THROUGH);
+//		emit ("label%d :\n", next_label);
+    } else { // no fall through
+        _left->genBoolExp (FALL_THROUGH, 	// if left operand is true then fall through and
+                                         // evaluate right operand
+						   truelabel); // if left operand is false then the IMPLY expression is true
+						                // so jump to truelabel (without evaluating the right operand)
+		_right->genBoolExp (truelabel, falselabel);
+	}
+}
+
 void Not::genBoolExp (int truelabel, int falselabel)
 {
     _operand->genBoolExp (falselabel, truelabel); 
