@@ -282,7 +282,8 @@ void WhileStmt::genStmt()
 {
     int condlabel = newlabel ();
 	int exitlabel = newlabel ();
-	
+	exitlabels.push(exitlabel);
+
 	emit ("label%d:\n", condlabel);
 	_condition->genBoolExp (FALL_THROUGH, exitlabel);
 	
@@ -293,12 +294,14 @@ void WhileStmt::genStmt()
 	
 	emit ("goto label%d\n", condlabel);
 	emit ("label%d:\n", exitlabel);
+	exitlabels.pop();
 }
 
 void DoWhileStmt::genStmt()
 {
     int stmtlabel = newlabel ();
 	int exitlabel = newlabel ();
+	exitlabels.push(exitlabel);
 	
 	emit ("label%d:\n", stmtlabel);
 	_body->genStmt ();
@@ -311,6 +314,7 @@ void ForStmt::genStmt()
 {
     int condlabel = newlabel ();
 	int exitlabel = newlabel ();
+	exitlabels.push(exitlabel);
 
     _init->genStmt();
 	
@@ -324,6 +328,7 @@ void ForStmt::genStmt()
 	
 	emit ("goto label%d\n", condlabel);
 	emit ("label%d:\n", exitlabel);
+	exitlabels.pop();
 }
 
 void Block::genStmt()
@@ -348,6 +353,7 @@ void SwitchStmt::genStmt()
 		}
 		int defaultabel = newlabel ();
 		int exitlabel = newlabel ();
+		exitlabels.push(exitlabel);
 		emit("goto label%d\n", defaultabel);
 		for (Case *cse = _caselist; cse != NULL; cse = cse->_next)
 		{
@@ -359,13 +365,15 @@ void SwitchStmt::genStmt()
 		emit("label%d:\n", defaultabel);
 		_default_stmt->genStmt();
 		emit("label%d:\n", exitlabel);
+		exitlabels.pop();
 	}
 }
 
 void BreakStmt::genStmt()
 {
-	/* not implemented yet; */	
+	if (exitlabels.empty())
+		errorMsg("line %d: break must be in a loop or switch\n", _line);
+	else
+		emit("goto label%n\n", exitlabels.top());
 }
-
-
 
