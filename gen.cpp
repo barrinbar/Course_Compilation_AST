@@ -374,6 +374,6 @@ void BreakStmt::genStmt()
 	if (exitlabels.empty())
 		errorMsg("line %d: break must be in a loop or switch\n", _line);
 	else
-		emit("goto label%n\n", exitlabels.top());
+		emit("goto label%d\n", exitlabels.top());
 }
 
