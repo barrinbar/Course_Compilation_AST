@@ -1891,7 +1891,7 @@ yyreduce:
   case 43:
 /* Line 1792 of yacc.c  */
 #line 174 "ast.y"
-    { (yyval.boolexp) = 0; /* not implemented yet */ }
+    { (yyval.boolexp) = new Imply ((yyvsp[(1) - (3)].boolexp), (yyvsp[(3) - (3)].boolexp)); }
     break;
 
   case 44:
