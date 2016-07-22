@@ -1,3 +1,8 @@
+/*
+Author: Gadi Pessah 
+Updates: Omer Elgrably and Barr Inbar
+*/
+
 #ifndef __AST_H
 #define __AST_H 1
 
