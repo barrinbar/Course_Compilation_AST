@@ -21,8 +21,8 @@ BinaryOp::BinaryOp (enum op op, Exp *left, Exp *right, int line)
 	_line = line;
 
 	if (left->_type != right->_type) {
-	    errorMsg ("line %d: operator %s applied to operands\
- having different types\n", line, opName (op, _INT));
+	    /*errorMsg ("line %d: operator %s applied to operands\
+ having different types\n", line, opName (op, _INT));*/
 		_type = _FLOAT;
 	}
 	else
@@ -41,9 +41,9 @@ AssignStmt::AssignStmt (IdNode *lhs, Exp *rhs, int line)
    _rhs = rhs; 
    _line = line; 
 
-    if (lhs->_type != _rhs->_type && lhs->_type != UNKNOWN)
+    /*if (lhs->_type != _rhs->_type && lhs->_type != UNKNOWN)
        errorMsg ("line %d: left hand side and right hand side\
- of assignment have different types\n", _line);
+ of assignment have different types\n", _line);*/
 
 }
 

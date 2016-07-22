@@ -102,7 +102,20 @@ void BinaryOp::genExp ()
 	}
 #endif
 	
-  	emit ("_t%d = _t%d %s _t%d\n", _result, left_operand_result, the_op, right_operand_result);
+	if (_left->_type == _right->_type)
+	  	emit ("_t%d = _t%d %s _t%d\n", _result, left_operand_result, the_op, right_operand_result);
+	else if (_left->_type == _INT)
+	{
+		int castVal = newTemp();
+		emit("_t%d = (float) _t%d\n", castVal, left_operand_result);
+		emit ("_t%d = _t%d %s _t%d\n", _result, castVal, the_op, right_operand_result);
+	}
+	else
+	{
+		int castVal = newTemp();
+		emit("_t%d = (float) _t%d\n", castVal, right_operand_result);
+		emit ("_t%d = _t%d %s _t%d\n", _result, left_operand_result, the_op, castVal);
+	}
 }
 
 void NumNode::genExp () 
