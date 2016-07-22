@@ -1,8 +1,13 @@
+/*
+Author: Gadi Pessah 
+Updates: Omer Elgrably and Barr Inbar
+*/
+
 #include <stdio.h>
 #include <stdlib.h> // exit ()
 #include <stdarg.h>
 #include <stack>
-#include <map>
+#include <map> // Used for case labels in switch statement 
 
 #include "ast.h"
 #include "symtab.h"
@@ -79,6 +84,7 @@ void BinaryOp::genExp ()
 	
 	int left_operand_result = _left->_result;
 	int right_operand_result = _right->_result;
+	int castVal = (_left->_type == _right->_type) ? -1 : newTemp(); // Casted operand (When needed)
 	
 	_result = newTemp ();
 	
@@ -102,17 +108,17 @@ void BinaryOp::genExp ()
 	}
 #endif
 	
-	if (_left->_type == _right->_type)
-	  	emit ("_t%d = _t%d %s _t%d\n", _result, left_operand_result, the_op, right_operand_result);
-	else if (_left->_type == _INT)
+	if (_left->_type == _right->_type) // When both operands of same type simply perform the op
 	{
-		int castVal = newTemp();
+	  	emit ("_t%d = _t%d %s _t%d\n", _result, left_operand_result, the_op, right_operand_result);
+	}
+	else if (_left->_type == _INT) // When left operand is int, cast it to float and then perform the op
+	{
 		emit("_t%d = (float) _t%d\n", castVal, left_operand_result);
 		emit ("_t%d = _t%d %s _t%d\n", _result, castVal, the_op, right_operand_result);
 	}
-	else
+	else // When right operand is int, cast it to float and then perform the op
 	{
-		int castVal = newTemp();
 		emit("_t%d = (float) _t%d\n", castVal, right_operand_result);
 		emit ("_t%d = _t%d %s _t%d\n", _result, left_operand_result, the_op, castVal);
 	}
@@ -418,4 +424,3 @@ void BreakStmt::genStmt()
 	else
 		emit("goto label%d\n", exitlabels.top());
 }
-
